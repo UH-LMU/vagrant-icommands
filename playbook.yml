@@ -13,32 +13,14 @@
     - name: install language pack
       apt: name=language-pack-fi state=present
 
-#    - name: install icommands
-#      apt: deb=ftp://ftp.renci.org/pub/irods/releases/4.1.9/ubuntu14/irods-icommands-4.1.9-ubuntu14-x86_64.deb state=present
+    - name: install icommands
+      apt: deb=ftp://ftp.renci.org/pub/irods/releases/4.1.9/ubuntu14/irods-icommands-4.1.9-ubuntu14-x86_64.deb state=present
 
     - name: install cifs-utils
       apt: name=cifs-utils state=present
 
     - name: create .irodsEnv configuration directory
       file: path=/home/vagrant/.irods state=directory owner=vagrant group=vagrant
-    - name: create .irodsEnv configuration
-      blockinfile:
-        dest: /home/vagrant/.irods/irods_environment.json
-        create: yes
-        owner: vagrant
-        group: vagrant
-        block: |
-          {
-            "irods_host": "ida.csc.fi",
-            "irods_port": 1247,
-            "irods_zone_name": "ida",
-            "irods_user_name": "my_irods_user_name",
-            "irods_home": "/ida/hy/hy7004",
-            "irods_authentication_scheme": "native",
-            "irods_default_resource": ""
-          }
-    - name: remove comments from Ida config file_mode
-      command: sed -i /#/d /home/vagrant/.irods/irods_environment.json
 
     handlers:
       - name: restart machine
